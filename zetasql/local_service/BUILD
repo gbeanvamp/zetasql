@@ -18,7 +18,7 @@ load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
 
 # ZetaSQL Server
-package(default_visibility = ["//:__subpackages__"])
+package(default_visibility = ["//visibility:public"])
 
 cc_library(
     name = "local_service",
