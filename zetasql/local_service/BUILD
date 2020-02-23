@@ -179,3 +179,10 @@ cc_binary(
     linkshared = 1,
     deps = [":local_service_jni"],
 )
+
+genrule(
+    name = "liblocal_service_jni.darwin",
+    srcs = [":liblocal_service_jni.so"],
+    outs = ["liblocal_service_jni.jnilib"],
+    cmd = "cp $< $@",
+)

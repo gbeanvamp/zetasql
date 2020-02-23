@@ -16,6 +16,7 @@
 
 #include "zetasql/public/analyzer.h"
 
+#include <iostream>
 #include <type_traits>
 
 #include "zetasql/base/logging.h"
@@ -955,7 +956,16 @@ TEST_F(AnalyzerOptionsTest, Deserialize) {
 }
 
 TEST_F(AnalyzerOptionsTest, ClassAndProtoSize) {
-  EXPECT_EQ(200, sizeof(AnalyzerOptions) - sizeof(LanguageOptions) -
+  /*
+    gbean: This seems like a silly, unportable test, no?
+  */
+#if defined(__MACH__)
+  int expected_size = 248;
+#else
+  int expected_size = 200;
+#endif
+
+  EXPECT_EQ(expected_size, sizeof(AnalyzerOptions) - sizeof(LanguageOptions) -
                      sizeof(AllowedHintsAndOptions) -
                      sizeof(Catalog::FindOptions) - sizeof(SystemVariablesMap) -
                      2 * sizeof(QueryParametersMap) - 1 * sizeof(std::string))

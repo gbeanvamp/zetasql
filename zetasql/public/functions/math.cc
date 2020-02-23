@@ -54,6 +54,17 @@ static long double kDecimalExponentDouble[kDoubleMaxExponent -
 static double kDecimalExponentFloat[kFloatMaxExponent -
                                     kFloatMinExponent + 1];
 
+#if defined(__MACH__)
+double exp10(double val) {
+	return pow(10, val);
+}
+
+long double exp10l(long double val) {
+	return pow(10, val);
+}
+#endif
+
+
 void InitExponents() {
   for (int i = 0; i < ABSL_ARRAYSIZE(kDecimalExponentDouble); ++i) {
     kDecimalExponentDouble[i] = exp10l(i + kDoubleMinExponent);

@@ -129,9 +129,15 @@ JNI_CHANNEL_SRCS = [
 java_library(
     name = "jni_channel",
     srcs = JNI_CHANNEL_SRCS,
-    resources = [
-        "//zetasql/local_service:liblocal_service_jni.so",
-    ],
+    resources =
+        select({
+            "@bazel_tools//src/conditions:darwin": [
+                "//zetasql/local_service:liblocal_service_jni.darwin",
+            ],
+            "//conditions:default": [
+                "//zetasql/local_service:liblocal_service_jni.so",
+            ],
+        }),
     tags = ["maven_coordinates=com.google.zetasql:zetasql-jni-channel:${project.version}"],
     deps = [
         ":channel_provider",

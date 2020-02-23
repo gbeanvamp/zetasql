@@ -92,7 +92,7 @@ class SourceLocation {
   //   }
   static constexpr SourceLocation current(
       PrivateTag = PrivateTag{}, std::uint_least32_t line = __builtin_LINE(),
-      const char* file_name = __builtin_FILE()) {
+      const char* file_name = "unknown") {
     return SourceLocation(line, file_name);
   }
 #else

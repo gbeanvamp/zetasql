@@ -23,8 +23,15 @@
 #include "zetasql/base/status.h"
 
 namespace zetasql {
+#if defined(__clang__)
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wmismatched-tags"
+#endif
 
 struct ColumnFilter;
+#if defined(__clang__)
+  #pragma clang diagnostic pop
+#endif
 
 // Iterator interface for a user-supplied table in a PreparedQuery.
 //
@@ -47,7 +54,7 @@ class EvaluatorTableIterator {
   virtual int NumColumns() const = 0;
 
   // Returns the name of the i-th column. Anonymous columns have empty
-  // names. There may be more than one column with the same name. 'i' must be in
+  // names. There may be more than one olumn with the same name. 'i' must be in
   // [0, 'NumColumns()').
   virtual std::string GetColumnName(int i) const = 0;
 
@@ -175,6 +182,11 @@ class EvaluatorTableIterator {
 //   int64_t and uint64_t is allowed.
 // Value::SqlLessThan() and Value::SqlEquals() implement comparison with these
 // semantics.
+//
+#if defined(__clang__)
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wmismatched-tags"
+#endif
 class ColumnFilter {
  public:
   enum Kind {
@@ -218,6 +230,9 @@ class ColumnFilter {
   // bound.
   std::vector<Value> values_;
 };
+#if defined(__clang__)
+  #pragma clang diagnostic pop
+#endif
 
 }  // namespace zetasql
 
