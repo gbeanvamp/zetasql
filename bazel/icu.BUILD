@@ -35,11 +35,6 @@ filegroup(
 configure_make(
     name = "icu",
     configure_command = "source/configure",
-    configure_env_vars = {
-        "CXXFLAGS": "-fPIC",  # For JNI
-        "CFLAGS": "-fPIC",  # For JNI
-        "LIBS": "$$LDFLAGS$$",
-    },
     configure_options = [
         "--enable-option-checking",
         "--enable-static",
@@ -52,6 +47,19 @@ configure_make(
         "--disable-samples",
         "--with-data-packaging=static",
     ],
+    configure_env_vars = select({
+        "@bazel_tools//src/conditions:darwin": {
+            "CXXFLAGS": "-fPIC",  # For JNI
+            "CFLAGS": "-fPIC",  # For JNI
+            "LIBS": "$$LDFLAGS$$",
+            "ARFLAGS": "-r",
+        },
+        "//conditions:default": {
+            "CXXFLAGS": "-fPIC",  # For JNI
+            "CFLAGS": "-fPIC",  # For JNI
+            "LIBS": "$$LDFLAGS$$",
+        },
+    }),
     lib_source = "@icu//:all",
     static_libraries = [
         "libicui18n.a",
@@ -59,6 +67,7 @@ configure_make(
         "libicuuc.a",
         "libicudata.a",
     ],
+    alwayslink = 1,
 )
 
 cc_library(

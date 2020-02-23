@@ -1959,8 +1959,8 @@ TYPED_TEST(AggregatorSerializationByTypeTest,
                 StatusIs(zetasql_base::OUT_OF_RANGE,
                          testing::MatchesRegex(
                              "Invalid "
-                             "NumericValue::(|Sum|Variance|Covariance|"
-                             "Correlation)Aggregator encoding")));
+                             "NumericValue::(Sum|Variance|Covariance|"
+                             "Correlation)?Aggregator encoding")));
   }
 }
 
