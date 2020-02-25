@@ -11,4 +11,4 @@ OUTDIR=./python
     bazel-bin/protos/zetasql/proto/*.proto \
     bazel-bin/protos/zetasql/public/*.proto \
     bazel-bin/protos/zetasql/public/proto/*.proto \
-    bazel-bin/protos/zetasql/resolved_ast/*.proto 
+    bazel-bin/protos/zetasql/resolved_ast/*.proto
