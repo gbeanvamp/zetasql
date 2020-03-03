@@ -12,12 +12,14 @@ FROM base as builder
 COPY . /workspace
 WORKDIR /workspace
 RUN bazel build --jobs=5 --local_ram_resources=HOST_RAM*.5 --local_cpu_resources=HOST_CPUS*1 //zetasql/server --verbose_failures
-RUN bazel build --jobs=5 //protos:local_service
 
 
 FROM debian:buster-slim
 RUN mkdir -p /opt/zetasql
+RUN groupadd -g 999 zetasql && \
+    useradd -r -u 999 -g zetasql zetasql
 COPY --from=builder /workspace/bazel-bin/zetasql/server/server /opt/zetasql/server
-COPY --from=builder /workspace/bazel-bin/protos /opt/zetasql/protos
+RUN chown -R zetasql:zetasql /opt/zetasql
 EXPOSE 5000
+USER zetasql
 CMD ["/opt/zetasql/server", "--listen_address", "0.0.0.0:5000"]

@@ -8,7 +8,7 @@ EXTRAS = {}
 print(find_namespace_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]))
 
 setup(name='zetasql',
-    version='0.1',
+    version='0.1.0',
     description='GRPC and Protobuf libraries for ZetaSQL',
     url='http://github.com/gbeanvamp/zetasql',
     author='Gregory Bean',
